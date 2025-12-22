@@ -1,8 +1,10 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
 import { useAuth } from '@/contexts/auth-context';
 import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 
 export default function DashboardPage() {
   const { user } = useAuth();
@@ -54,78 +56,123 @@ export default function DashboardPage() {
     },
   ];
 
+  const recentActivities = [
+    {
+      type: 'contribution',
+      title: 'Monthly contribution received',
+      date: 'December 1, 2025',
+      amount: '₦35,000',
+      color: 'bg-primary-500',
+    },
+    {
+      type: 'loan',
+      title: 'Loan application approved',
+      date: 'November 15, 2025',
+      amount: '₦500,000',
+      color: 'bg-accent-500',
+    },
+    {
+      type: 'payment',
+      title: 'Loan payment processed',
+      date: 'November 28, 2025',
+      amount: '₦45,000',
+      color: 'bg-success',
+    },
+    {
+      type: 'system',
+      title: 'Document uploaded successfully',
+      date: 'November 20, 2025',
+      amount: null,
+      color: 'bg-secondary-500',
+    },
+  ];
+
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
+      {/* Header & User Info */}
+      <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
+            <p className="text-gray-600 mt-1">Welcome back, {user?.name}!</p>
+          </div>
+          <div className="text-right">
+            <p className="text-sm text-gray-500">{user?.department}</p>
+            <p className="text-sm text-gray-400">Staff ID: {user?.staffId}</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Key Performance Indicators */}
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Welcome back, {user?.name}!</h1>
-        <p className="text-gray-600">Here's an overview of your cooperative account.</p>
+        <h2 className="text-xl font-semibold text-gray-900 mb-4">Account Overview</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {stats.map((stat, index) => (
+            <Card key={index} className="p-6 hover:shadow-lg transition-shadow border border-gray-200">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-gray-600">{stat.title}</p>
+                  <p className="text-2xl font-bold text-gray-900 mt-1">{stat.value}</p>
+                  <p className={`text-sm mt-1 ${
+                    stat.changeType === 'positive' ? 'text-success' :
+                    stat.changeType === 'negative' ? 'text-danger' :
+                    'text-gray-500'
+                  }`}>
+                    {stat.change}
+                  </p>
+                </div>
+                <div className="p-3 bg-gray-50 rounded-lg">
+                  {stat.icon}
+                </div>
+              </div>
+            </Card>
+          ))}
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {stats.map((stat, index) => (
-          <Card key={index} className="p-6 hover:shadow-lg transition-shadow">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">{stat.title}</p>
-                <p className="text-2xl font-bold text-gray-900 mt-1">{stat.value}</p>
-                <p className={`text-sm mt-1 ${
-                  stat.changeType === 'positive' ? 'text-success' :
-                  stat.changeType === 'negative' ? 'text-danger' :
-                  'text-gray-500'
-                }`}>
-                  {stat.change}
-                </p>
-              </div>
-              <div className="p-3 bg-gray-50 rounded-lg">
-                {stat.icon}
-              </div>
-            </div>
-          </Card>
-        ))}
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card className="p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Recent Activity</h3>
+      {/* Recent Activity Feed */}
+      <div>
+        <h2 className="text-xl font-semibold text-gray-900 mb-4">Recent Activity</h2>
+        <Card className="p-6 border border-gray-200">
           <div className="space-y-4">
-            <div className="flex items-center space-x-3">
-              <div className="w-2 h-2 bg-primary-500 rounded-full"></div>
-              <div className="flex-1">
-                <p className="text-sm font-medium text-gray-900">Monthly contribution received</p>
-                <p className="text-xs text-gray-500">December 1, 2025 • ₦35,000</p>
+            {recentActivities.map((activity, index) => (
+              <div key={index} className="flex items-center space-x-4">
+                <div className={`w-3 h-3 ${activity.color} rounded-full flex-shrink-0`}></div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-gray-900">{activity.title}</p>
+                  <p className="text-xs text-gray-500">
+                    {activity.date} {activity.amount && `• ${activity.amount}`}
+                  </p>
+                </div>
               </div>
-            </div>
-            <div className="flex items-center space-x-3">
-              <div className="w-2 h-2 bg-accent-500 rounded-full"></div>
-              <div className="flex-1">
-                <p className="text-sm font-medium text-gray-900">Loan application approved</p>
-                <p className="text-xs text-gray-500">November 15, 2025 • ₦500,000</p>
-              </div>
-            </div>
-            <div className="flex items-center space-x-3">
-              <div className="w-2 h-2 bg-success rounded-full"></div>
-              <div className="flex-1">
-                <p className="text-sm font-medium text-gray-900">Loan payment processed</p>
-                <p className="text-xs text-gray-500">November 28, 2025 • ₦45,000</p>
-              </div>
-            </div>
+            ))}
           </div>
         </Card>
+      </div>
 
-        <Card className="p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h3>
-          <div className="space-y-3">
-            <button className="w-full bg-primary-500 text-white px-4 py-3 rounded-lg hover:bg-primary-600 transition-colors font-medium">
+      {/* Quick Actions */}
+      <div>
+        <h2 className="text-xl font-semibold text-gray-900 mb-4">Quick Actions</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <Link href="/dashboard/loans/apply">
+            <Button
+              variant="solid"
+              colorSchema="primary"
+              className="w-full h-12 text-base font-medium shadow-md shadow-primary-500/20 hover:shadow-lg transition-shadow"
+            >
               Apply for Loan
-            </button>
-            <button className="w-full bg-white border border-gray-300 text-gray-700 px-4 py-3 rounded-lg hover:bg-gray-50 transition-colors font-medium">
-              View Contribution History
-            </button>
-            <button className="w-full bg-white border border-gray-300 text-gray-700 px-4 py-3 rounded-lg hover:bg-gray-50 transition-colors font-medium">
-              Update Profile
-            </button>
-          </div>
-        </Card>
+            </Button>
+          </Link>
+          <Link href="/dashboard/profile">
+            <Button
+              variant="outline"
+              colorSchema="muted"
+              className="w-full h-12 text-base font-medium border-2 hover:bg-gray-50 transition-colors"
+            >
+              View Profile
+            </Button>
+          </Link>
+        </div>
       </div>
     </div>
   );

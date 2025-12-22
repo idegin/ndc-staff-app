@@ -62,22 +62,24 @@ export default function Header() {
             </nav>
 
             <div className="flex items-center space-x-3">
-              <Button
-                variant="ghost"
-                colorSchema="muted"
-                className="hidden sm:inline-flex"
-                onClick={() => console.log('Login clicked')}
-              >
-                Log In
-              </Button>
-              <Button
-                variant="solid"
-                colorSchema="primary"
-                onClick={() => console.log('Get Started clicked')}
-                className="shadow-md shadow-primary-500/20 hidden md:inline-flex"
-              >
-                Get Started
-              </Button>
+              <Link href="/dashboard">
+                <Button
+                  variant="ghost"
+                  colorSchema="muted"
+                  className="hidden sm:inline-flex"
+                >
+                  Log In
+                </Button>
+              </Link>
+              <Link href="/dashboard">
+                <Button
+                  variant="solid"
+                  colorSchema="primary"
+                  className="shadow-md shadow-primary-500/20 hidden md:inline-flex"
+                >
+                  Get Started
+                </Button>
+              </Link>
 
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -168,28 +170,24 @@ export default function Header() {
           </nav>
 
           <div className="p-4 border-t border-gray-200 space-y-3">
-            <Button
-              variant="outline"
-              colorSchema="muted"
-              className="w-full justify-center"
-              onClick={() => {
-                console.log('Login clicked');
-                setMobileMenuOpen(false);
-              }}
-            >
-              Log In
-            </Button>
-            <Button
-              variant="solid"
-              colorSchema="primary"
-              className="w-full justify-center shadow-md shadow-primary-500/20"
-              onClick={() => {
-                console.log('Get Started clicked');
-                setMobileMenuOpen(false);
-              }}
-            >
-              Get Started
-            </Button>
+            <Link href="/dashboard" onClick={() => setMobileMenuOpen(false)}>
+              <Button
+                variant="outline"
+                colorSchema="muted"
+                className="w-full justify-center"
+              >
+                Log In
+              </Button>
+            </Link>
+            <Link href="/dashboard" onClick={() => setMobileMenuOpen(false)}>
+              <Button
+                variant="solid"
+                colorSchema="primary"
+                className="w-full justify-center shadow-md shadow-primary-500/20"
+              >
+                Get Started
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

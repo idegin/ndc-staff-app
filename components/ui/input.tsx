@@ -19,6 +19,8 @@ export const Input: React.FC<InputProps> = ({
   colorSchema = 'muted',
   variant = 'solid',
   size = 'md',
+  min,
+  max,
   className,
 }) => {
   const baseClasses = 'w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 transition-colors';
@@ -52,6 +54,8 @@ export const Input: React.FC<InputProps> = ({
       onChange={(e) => onChange?.(e.target.value)}
       disabled={disabled}
       required={required}
+      min={min}
+      max={max}
       className={classes}
     />
   );

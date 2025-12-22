@@ -42,6 +42,8 @@ export interface InputProps extends BaseComponentProps {
   disabled?: boolean;
   required?: boolean;
   size?: 'sm' | 'md' | 'lg';
+  min?: string;
+  max?: string;
 }
 
 export interface TextareaProps extends BaseComponentProps {

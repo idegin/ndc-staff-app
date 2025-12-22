@@ -6,6 +6,7 @@ interface User {
   id: string;
   name: string;
   email: string;
+  phone?: string;
   department: string;
   staffId: string;
   role: 'staff' | 'admin';
@@ -43,6 +44,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       id: '1',
       name: 'John Doe',
       email: email,
+      phone: '+234 801 234 5678',
       department: 'Operations',
       staffId: 'NDC-001',
       role: 'staff',

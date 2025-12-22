@@ -1,118 +1,241 @@
-Great! Based on the **product scope** in your proposal and your current development plan—focusing **first on the public-facing website and authenticated user dashboard (not admin)**—here’s a clear, prioritized list of **essential pages**, along with the **purpose and rationale** for each.
+Based on the **proposal document** and your current dashboard design, here is a **detailed breakdown of the essential pages for the user dashboard**, along with **exactly what each page should display**, to fully align with the system's objectives.
 
 ---
 
-## ✅ **Public-Facing (Unauthenticated) Pages**
+## 🎯 OVERALL DASHBOARD STRUCTURE (Per Proposal)
 
-These are accessible to anyone visiting the site—ideal for awareness, onboarding, and support.
+The proposal defines **four key user-facing features** that must be reflected in the dashboard:
 
-### 1. **`/` — Home (Landing Page)**
-- **Purpose**: Introduce the cooperative system, explain its benefits, and guide staff toward registration/login.
-- **Why**: First impression; must clearly communicate value ("track contributions", "apply for loans", "real-time updates").
+1.  **User Registration & Profile Management**
+2.  **Contribution Dashboard**
+3.  **Loan Eligibility Checker & Application**
+4.  **Loan Tracking**
 
-### 2. **`/about` — About the Cooperative System**
-- **Purpose**: Explain what the system is, who it’s for (NDC staff), and how it improves the old manual process.
-- **Why**: Builds trust and context. Helps new staff understand why they should use it.
-
-### 3. **`/contact` — Contact / Support Page**
-- **Purpose**: Provide contact info (email, phone), support hours, and possibly a simple contact form.
-- **Why**: Users may have onboarding or access issues before logging in. Essential for user support.
-
-> 💡 *Optional but recommended*:  
-> **`/faq` — Frequently Asked Questions**  
-> - Anticipate common questions: “How do I register?”, “What determines my loan limit?”, “Who approves loans?”  
-> - Reduces support burden and improves self-service.
+Your current design already has a solid foundation for the main `/dashboard` page. Below are the detailed specifications for each page.
 
 ---
 
-## 🔐 **Authenticated User Dashboard Pages**
+# ✅ 1. `/dashboard` — Main Dashboard Overview
 
-Accessible only after login. Tailored to staff members' needs per the proposal.
+This is the **central hub** after login. It should provide a **real-time snapshot** of the user’s cooperative account.
 
-### 4. **`/dashboard` — Main Dashboard (Overview)**
-- **Purpose**: Central hub showing:
-  - Total contributions to date
-  - Current loan status (if any)
-  - Quick actions: “Apply for Loan”, “View Profile”
-- **Why**: Provides instant visibility—core to transparency and user satisfaction.
+### A. Header & User Info
+- **Current Page**: `Dashboard`
+- **User Greeting**: “Welcome back, [Full Name]!”
+- **User Details**: Display name, department, and Staff ID (e.g., `NDC-001`) as shown in your image.
+- **Profile Dropdown**: Allow access to Profile settings or Logout.
 
-### 5. **`/dashboard/profile` — User Profile Management**
-- **Purpose**: View/edit personal info (name, department, phone, email, profile picture).
-- **Why**: Allows users to keep info updated; may be needed for verification or communication.
+### B. Key Performance Indicators (KPIs) - 4 Cards
+*(As shown in your mockup — excellent start)*
 
-### 6. **`/dashboard/contributions` — Contribution History**
-- **Purpose**: List all monthly contributions with dates, amounts, and running total.
-- **Why**: Critical transparency feature; users need to verify accuracy and track progress.
+1.  **Total Contributions**
+    - **Label**: “Total Contributions”
+    - **Value**: Sum of all contributions made to date (e.g., `₦2,450,000`)
+    - **Change**: Optional percentage change from last period (e.g., `+12.5%`)
+    - **Icon**: Dollar sign (`$`) or piggy bank.
 
-### 7. **`/dashboard/loans` — Loan Overview**
-- **Purpose**: List all past and current loans with statuses (e.g., Approved, Repaying, Completed).
-- **Why**: Gives full loan lifecycle visibility in one place.
+2.  **Active Loans**
+    - **Label**: “Active Loans”
+    - **Value**: Total outstanding balance across all active loans (e.g., `₦850,000`)
+    - **Sub-text**: Number of active loans (e.g., “2 loans”)
+    - **Icon**: Document or loan icon.
 
-### 8. **`/dashboard/loans/apply` — Loan Application Form**
-- **Purpose**: Step-by-step form to apply for a loan based on eligibility.
-  - Shows max eligible amount
-  - Captures purpose, amount, uploads docs
-  - Prevents over-application
-- **Why**: Core transactional feature; must be intuitive and guided.
+3.  **Loan Eligibility**
+    - **Label**: “Loan Eligibility”
+    - **Value**: Maximum loan amount the user is currently eligible for (e.g., `₦1,200,000`)
+    - **Status**: “Available” (green checkmark) or “Not Eligible” (red cross) based on rules.
+    - **Logic**: Calculated automatically per proposal: minimum 6 months contribution + total sum → multiplier (2x, 3x, 4x).
+    - **Icon**: Green checkmark or shield.
 
-### 9. **`/dashboard/loans/:id` — Loan Detail Page** *(optional but recommended)*
-- **Purpose**: Show detailed info for a specific loan: disbursement date, repayment schedule, outstanding balance.
-- **Why**: Users need granular info per loan, especially if they have multiple.
+4.  **Next Payment**
+    - **Label**: “Next Payment”
+    - **Value**: Date of next scheduled repayment (e.g., `Dec 28, 2025`)
+    - **Amount**: The installment amount due (e.g., `₦45,000`)
+    - **Icon**: Clock or calendar.
 
----
-
-## 🔐 **Authentication Pages** (Technically separate but essential)
-
-Even though not in your main nav, these are required:
-
-- **`/login`** — Staff login (email/phone + password, possibly staff ID)
-- **`/register`** — New user registration (with staff ID verification)
-- **`/forgot-password`** — Password reset flow
-
-> ⚠️ **Note**: The proposal mentions **staff ID verification**—so registration likely requires validation against an internal list or admin approval. Plan for a “pending verification” state.
+> 💡 **Why these KPIs?** They directly map to the proposal’s goals: transparency, real-time access, and automated eligibility checks.
 
 ---
 
-## 📌 Summary: Recommended Page Structure
+### C. Recent Activity Feed
+- **Title**: “Recent Activity”
+- **Purpose**: Show a chronological log of recent events to build trust and awareness.
+- **Items to Display**:
+    - **Monthly contribution received** → Date + Amount (e.g., `December 1, 2025 • ₦35,000`)
+    - **Loan application approved/rejected** → Date + Loan Amount (e.g., `November 15, 2025 • ₦500,000`)
+    - **Loan payment processed** → Date + Amount Paid (e.g., `November 28, 2025 • ₦45,000`)
+    - **System notifications** (if applicable): e.g., “Document uploaded successfully.”
 
-```
-/                     → Home (public)
-/about                → About the system (public)
-/contact              → Contact/support (public)
-/faq                  → (optional but useful)
-
-/login                → Authentication
-/register
-/forgot-password
-
-/dashboard            → Overview (authenticated)
-/dashboard/profile
-/dashboard/contributions
-/dashboard/loans
-/dashboard/loans/apply
-/dashboard/loans/:id  → (optional detail view)
-```
+> ✅ **Proposal Alignment**: This satisfies “Real-time status updates” and “Notifications”.
 
 ---
 
-## 💡 Final Recommendations
+### D. Quick Actions Panel
+- **Title**: “Quick Actions”
+- **Buttons**:
+    1.  **Primary Button**: “Apply for Loan” → Links to `/dashboard/loans/apply`
+        - *This is the most critical action.*
+    2.  **Secondary Button**: “View Contribution History” → Links to `/dashboard/contributions`
+    3.  **Tertiary Button**: “Update Profile” → Links to `/dashboard/profile`
 
-1. **Start with core authenticated flows**:  
-   Prioritize `/dashboard`, `/contributions`, `/loans`, and `/loans/apply`—these deliver the main value.
+> 💡 **Why?** Reduces friction. Users can immediately take the most common actions without navigating menus.
 
-2. **Design for mobile-first**:  
-   Many users will access via the mobile app, but your web dashboard should be equally responsive.
+---
 
-3. **Use clear status indicators**:  
-   Loan stages (Submitted → Approved → Disbursed) should be visually obvious—consider progress bars or timelines.
+# ✅ 2. `/dashboard/contributions` — Contribution History
 
-4. **Show eligibility upfront**:  
-   On the `/dashboard` or `/loans/apply` page, display: “You are eligible for up to ₦XXX,000” based on rules.
+This page provides **full historical data** on contributions.
 
-5. **Plan for document uploads**:  
-   Support PDF, JPG, PNG for loan applications—include file size/type validation.
+### A. Page Title & Summary
+- **Title**: “My Contribution History”
+- **Summary Card** (optional):
+    - Total Contributions: `₦2,450,000`
+    - Months Contributed: `18 months`
+    - Average Monthly Contribution: `₦136,111`
 
-6. **Include notifications (even basic)**:  
-   A bell icon or banner showing “Your loan was approved!” improves UX, even before full email/in-app system.
+### B. Contribution Table / List
+- **Columns**:
+    - **Date**: Month and Year (e.g., `December 2025`)
+    - **Amount**: Contribution amount (e.g., `₦35,000`)
+    - **Status**: “Received” or “Pending” (if payroll sync is delayed)
+    - **Action**: (Optional) “Download Receipt” or “View Details”
 
-By building these pages first, you deliver a **complete, usable experience for staff**—aligning perfectly with the proposal’s goals of **transparency, accessibility, and automation**—while deferring admin complexity to a later phase.
+> ✅ **Proposal Alignment**: “Access full historical contributions with dates and totals” and “Auto-calculated contribution summary”.
+
+---
+
+# ✅ 3. `/dashboard/loans` — Loan Overview
+
+This page lists **all past and current loans**.
+
+### A. Page Title & Summary
+- **Title**: “My Loan History”
+- **Summary Card** (optional):
+    - Total Loans Taken: `3`
+    - Total Repaid: `₦700,000`
+    - Outstanding Balance: `₦850,000`
+
+### B. Loan List / Table
+Each row represents one loan.
+
+| Loan ID | Purpose           | Amount     | Status         | Disbursed On | Due Date   | Repayment Plan |
+|---------|-------------------|------------|----------------|--------------|------------|----------------|
+| LOAN-001| Home Renovation   | ₦500,000   | Repaying       | Nov 15, 2025 | Dec 28, 2025 | 12 months      |
+| LOAN-002| Medical Emergency | ₦350,000   | Completed      | Oct 10, 2025 | Jan 10, 2026 | 6 months       |
+
+> ✅ **Proposal Alignment**: “Loan Tracking” and “Real-time status updates”.
+
+### C. Filter & Search (Optional but Recommended)
+- Filter by: Status (All, Active, Completed, Rejected)
+- Search by: Loan ID, Purpose, or Date Range
+
+---
+
+# ✅ 4. `/dashboard/loans/apply` — Loan Application Form
+
+This is where users apply for new loans.
+
+### A. Page Title & Eligibility Reminder
+- **Title**: “Apply for a New Loan”
+- **Eligibility Banner** (Critical!):
+    > “You are eligible for up to **₦1,200,000** based on your contribution history.”
+    > *(Link to “View Eligibility Rules” if needed)*
+
+### B. Loan Application Form Fields
+*(Must validate against eligibility rules)*
+
+1.  **Loan Type** (Dropdown):
+    - Select from pre-defined types (e.g., Personal, Education, Medical, Housing) — *based on cooperative policy*.
+
+2.  **Requested Amount** (Input field):
+    - **Validation**: Must be ≤ Eligible Amount (e.g., ≤ ₦1,200,000). Show error if exceeded.
+    - Auto-suggest max amount.
+
+3.  **Purpose of Loan** (Textarea):
+    - Free text description (e.g., “To cover tuition fees for my child”).
+
+4.  **Supporting Documents** (File Upload):
+    - Accept: PDF, JPG, PNG
+    - Max size: 5MB per file
+    - Required? Only if specified by loan type or admin rule.
+
+5.  **Terms & Conditions Checkbox**:
+    - “I agree to the cooperative’s loan terms and repayment schedule.”
+
+### C. Submit Button
+- **Button Text**: “Submit Loan Application”
+- **On Submit**:
+    - Validate all fields.
+    - Save draft or submit to admin queue.
+    - Redirect to `/dashboard/loans` with success message: “Your loan application has been submitted for review.”
+
+> ✅ **Proposal Alignment**: “Loan Application form”, “Validation to prevent applying for more than qualified”, “Supporting documents”.
+
+---
+
+# ✅ 5. `/dashboard/profile` — Profile Management
+
+This page allows users to manage their personal information.
+
+### A. Page Title
+- **Title**: “My Profile”
+
+### B. Editable Fields
+*(From Proposal: Full Name, Email, Phone, Staff ID, Department, Profile Picture)*
+
+1.  **Full Name** (Text Input)
+2.  **Email Address** (Text Input)
+3.  **Phone Number** (Text Input)
+4.  **Staff ID** (Read-only — cannot be changed)
+5.  **Department** (Dropdown or Text — may be editable if staff changes roles)
+6.  **Profile Picture** (Upload button + preview)
+    - Crop/resize tool recommended.
+    - File format: JPG, PNG
+
+### C. Save Button
+- **Button Text**: “Save Changes”
+- **On Save**: Update database, show success toast: “Profile updated successfully.”
+
+> ✅ **Proposal Alignment**: “User Registration & Profile Management”, “Verification via staff ID database”.
+
+---
+
+# ✅ 6. `/dashboard/loans/:id` — Loan Detail Page (Optional but Highly Recommended)
+
+When a user clicks on a loan in `/dashboard/loans`, they should see a detailed view.
+
+### A. Loan Summary
+- Loan ID, Purpose, Amount, Status, Disbursement Date, Due Date
+
+### B. Repayment Schedule
+- Table showing:
+    - Installment # | Due Date | Amount Due | Amount Paid | Status (Paid/Overdue)
+
+### C. Loan Timeline / Status Tracker
+- Visual flow: Submitted → Under Review → Approved → Disbursed → Repaying → Completed
+
+### D. Download Documents
+- Option to download loan agreement or repayment schedule as PDF.
+
+> ✅ **Proposal Alignment**: “Loan Tracking” and “Real-time status updates”.
+
+---
+
+## 🚫 What NOT to Include on User Dashboard (For Now)
+- Admin-specific features (staff approval, contribution upload, reporting)
+- Payroll integration UI (this happens behind the scenes)
+- Voting or messaging systems (future expansion)
+
+---
+
+## 📌 FINAL RECOMMENDATIONS
+
+1.  **Prioritize the 5 Core Pages**: `/dashboard`, `/contributions`, `/loans`, `/loans/apply`, `/profile`. These deliver 90% of the value.
+2.  **Use Clear Icons & Colors**: Green for positive/available, red for warnings, blue for info.
+3.  **Add Loading States & Error Handling**: Especially for API calls (e.g., fetching eligibility).
+4.  **Mobile Responsiveness**: Ensure all pages work flawlessly on phones.
+5.  **Security First**: Never expose sensitive data (like other users’ info) or allow unauthorized edits.
+
+---
+
+By building these pages exactly as described, you will have a **fully compliant, user-centric dashboard** that directly fulfills every requirement outlined in the proposal. Your current mockup is already very close — just expand the detail on each page as above.
