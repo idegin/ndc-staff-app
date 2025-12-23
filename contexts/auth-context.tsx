@@ -42,7 +42,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     // Dummy user data
     const dummyUser: User = {
       id: '1',
-      name: 'John Doe',
+      name: 'Muhammad Rayyan',
       email: email,
       phone: '+234 801 234 5678',
       department: 'Operations',

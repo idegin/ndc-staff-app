@@ -25,7 +25,7 @@ export default function HeroHome() {
               Empowering <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-accent-600">NDC Staff</span> Financial Growth
             </h1>
             <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed" data-aos="fade-up" data-aos-delay="500">
-              Seamlessly manage your contributions, access loans, and track your financial progress with our secure, automated platform designed exclusively for the National Defence College.
+              Seamlessly manage your contributions, access loans, and track your financial progress with our secure, automated platform designed exclusively for the National Defense College staff multipurpose cooperative society.
             </p>
 
             {/* CTA Buttons */}
